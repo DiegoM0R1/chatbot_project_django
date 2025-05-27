@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Avanzado con Django</title>
+    {% comment %} The {% csrf_token %} tag here is not strictly necessary for fetch API if cookie is set,
+        but it's good practice if you ever add a form. It helps ensure the cookie is set.
+        The ensure_csrf_cookie decorator on the view serving this page is more direct for AJAX. {% endcomment %}
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background-color: #2c3e50; display: flex; justify-content: center; align-items: center; height: 100vh; color: #ecf0f1; }
+        #chat-container { width: 450px; background-color: #34495e; box-shadow: 0 5px 15px rgba(0,0,0,0.2); border-radius: 10px; display: flex; flex-direction: column; height: 90vh; max-height: 700px; }
+        #chat-header { background-color: #e74c3c; color: white; padding: 15px; text-align: center; font-size: 1.2em; border-top-left-radius: 10px; border-top-right-radius: 10px;}
+        #chat-box { flex-grow: 1; padding: 20px; overflow-y: auto; border-bottom: 1px solid #2c3e50; }
+        .message { margin-bottom: 15px; padding: 12px 18px; border-radius: 20px; line-height: 1.5; max-width: 75%; word-wrap: break-word; }
+        .user-message { background-color: #3498db; color: white; align-self: flex-end; margin-left: auto; border-bottom-right-radius: 5px; }
+        .bot-message { background-color: #95a5a6; color: #2c3e50; align-self: flex-start; margin-right: auto; border-bottom-left-radius: 5px;}
+        
+        /* Área de Sugerencias (aparecerá debajo del último mensaje del bot si hay sugerencias) */
+        .suggestions-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 8px 20px 0px 20px; /* Ajusta el padding según sea necesario */
+            justify-content: flex-start; /* Alinea los botones con los mensajes del bot */
+            max-width: 75%; /* Para que no ocupe más que un mensaje de bot */
+            margin-bottom: 10px; /* Espacio antes del área de input */
+        }
+        .suggestion-button {
+            background-color: #5dade2;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .suggestion-button:hover {
+            background-color: #2e86c1;
+        }
+
+        #input-area { display: flex; padding: 15px; background-color: #2c3e50; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;}
+        #user-input { flex-grow: 1; padding: 12px; border: none; border-radius: 20px; margin-right: 10px; background-color: #ecf0f1; color: #2c3e50;}
+        #user-input:focus { outline: none; box-shadow: 0 0 0 2px #e74c3c; }
+        #send-button { padding: 12px 20px; background-color: #e74c3c; color: white; border: none; border-radius: 20px; cursor: pointer; font-weight: bold; }
+        #send-button:hover { background-color: #c0392b; }
+
+    </style>
+</head>
+<body>
+    <div id="chat-container">
+        <div id="chat-header">Asistente de Servicos DC 🧠</div>
+        <div id="chat-box">
+            <div class="message bot-message">¡Hola! Soy tu asistente AuraDeco de Decoraciones Mori. Pregúntame algo.</div>
+        </div>
+        <div id="input-area">
+            <input type="text" id="user-input" placeholder="Escribe tu mensaje aquí...">
+            <button id="send-button">Enviar</button>
+        </div>
+    </div>
+
+    <script>
+        const chatBox = document.getElementById('chat-box');
+        const userInput = document.getElementById('user-input');
+        const sendButton = document.getElementById('send-button');
+        const inputArea = document.getElementById('input-area'); // Para insertar sugerencias antes
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        const csrftoken = getCookie('csrftoken');
+
+        function clearSuggestions() {
+            const existingSuggestions = document.querySelector('.suggestions-container');
+            if (existingSuggestions) {
+                existingSuggestions.remove();
+            }
+        }
+
+        function showSuggestions(suggestions) {
+            clearSuggestions(); // Limpiar sugerencias previas
+            if (!suggestions || suggestions.length === 0) {
+                return;
+            }
+
+            const suggestionsContainer = document.createElement('div');
+            suggestionsContainer.classList.add('suggestions-container');
+
+            suggestions.forEach(text => {
+                const button = document.createElement('button');
+                button.classList.add('suggestion-button');
+                button.textContent = text;
+                button.addEventListener('click', function() {
+                    userInput.value = this.textContent; // Poner texto en input
+                    sendMessage(); // Enviar mensaje inmediatamente
+                    clearSuggestions(); // Opcional: limpiar sugerencias después de clic
+                });
+                suggestionsContainer.appendChild(button);
+            });
+            // Insertar el contenedor de sugerencias ANTES del área de input
+            chatBox.appendChild(suggestionsContainer); // Añadir al final del chatbox para que esté debajo del último mensaje del bot
+            chatBox.scrollTop = chatBox.scrollHeight; // Scroll para verlas
+        }
+
+        function addMessage(message, sender, suggestions = null) { // Modificado para aceptar sugerencias
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', sender === 'user' ? 'user-message' : 'bot-message');
+            messageDiv.textContent = message;
+            chatBox.appendChild(messageDiv);
+
+            if (sender === 'bot' && suggestions && suggestions.length > 0) {
+                showSuggestions(suggestions);
+            } else if (sender === 'user') { // Limpiar sugerencias cuando el usuario envía un mensaje
+                clearSuggestions();
+            }
+            
+            chatBox.scrollTop = chatBox.scrollHeight;
+            if (sender === 'user') userInput.focus();
+        }
+
+        async function sendMessage() {
+            const messageText = userInput.value.trim();
+            if (messageText === '') return;
+
+            addMessage(messageText, 'user'); // Limpia sugerencias previas al mostrar mensaje de usuario
+            userInput.value = '';
+
+            try {
+                const response = await fetch("{% url 'chatbot_app:chat_api' %}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrftoken
+                    },
+                    body: JSON.stringify({ message: messageText })
+                });
+                
+                if (!response.ok) {
+                    let errorMsg = 'Error del servidor al procesar.';
+                    try {
+                        const errorData = await response.json();
+                        errorMsg = errorData.error || errorMsg;
+                    } catch(e) { /* Ignore */ }
+                    addMessage(errorMsg, 'bot'); // No pasar sugerencias aquí
+                    return;
+                }
+
+                const data = await response.json();
+                // data.response es el texto, data.suggestions es la lista de sugerencias (si existe)
+                addMessage(data.response, 'bot', data.suggestions); 
+
+            } catch (error) {
+                console.error('Error al enviar mensaje (Django):', error);
+                addMessage('Error de conexión con el backend del chatbot (Django).', 'bot'); // No pasar sugerencias
+            }
+        }
+
+        sendButton.addEventListener('click', sendMessage);
+        userInput.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>

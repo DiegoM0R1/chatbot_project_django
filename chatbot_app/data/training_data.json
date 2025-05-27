@@ -1,0 +1,624 @@
+{
+  "sistema_nlp": {
+    "version": "3.1",
+    "modelo": "procesamiento_avanzado_contextual_mejorado",
+    "capacidades": [
+      "comprension_contextual",
+      "memoria_conversacional",
+      "inferencia_semantica",
+      "calculo_automatico",
+      "manejo_entidades",
+      "correccion_ortografica",
+      "analisis_sentimientos",
+      "reconocimiento_patrones_expandido"
+    ]
+  },
+  "configuracion_empresa": {
+    "nombre": "Decoraciones Mori",
+    "slogan": "Transformamos espacios, creamos ambientes",
+    "especialidades": ["limpieza_profesional", "decoracion_integral", "mantenimiento_especializado"],
+    "zona_operacion": "Lima_Metropolitana_Callao",
+    "experiencia_anos": 8,
+    "clientes_atendidos": "5000+",
+    "certificaciones": ["ISO_9001", "Certificacion_Ambiental"]
+  },
+  "entidades_nlp": {
+    "tipos_muebles": {
+      "pequenos": ["silla", "sillas", "taburete", "taburetes", "banco", "bancos", "mesa pequeña", "mesita", "puff", "ottoman"],
+      "medianos": ["sofa pequeño", "sillon", "sillones", "mesa", "mesas", "escritorio", "escritorios", "comoda", "comodas", "estante", "librero"],
+      "grandes": ["sofa grande", "cama", "camas", "ropero", "roperos", "closet", "armario", "mueble modular", "sala completa", "juego de sala"]
+    },
+    "tipos_cortinas": {
+      "rollers": ["roller", "rollers", "cortina roller", "enrollable", "enrollables", "persiana roller"],
+      "paneles": ["panel", "paneles", "cortina panel", "panel japones", "paneles japoneses"],
+      "tradicionales": ["cortina tradicional", "cortinas clasicas", "con argollas", "con ganchos", "de tela"]
+    },
+    "materiales_cortinas": {
+      "roller_basico": ["basico", "economico", "sencillo", "simple"],
+      "roller_blackout": ["blackout", "oscurecedor", "opaco", "que no pase luz"],
+      "roller_screen": ["screen", "traslucido", "que pase luz", "semi transparente"],
+      "roller_premium": ["premium", "de lujo", "alta calidad", "top"]
+    },
+    "tipos_alfombras": {
+      "comercial": ["comercial", "oficina", "negocio", "empresa"],
+      "residencial": ["casa", "hogar", "residencial", "departamento"],
+      "premium": ["premium", "lujo", "alta gama", "exclusiva"]
+    },
+    "dimensiones": {
+      "patrones_medidas": ["metro", "metros", "m2", "metro cuadrado", "x", "por", "de largo", "de ancho"],
+      "numeros": ["uno", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho", "nueve", "diez"]
+    },
+    "ubicaciones": {
+      "habitaciones": ["habitacion", "dormitorio", "cuarto", "recamara", "bedroom"],
+      "areas_comunes": ["sala", "comedor", "cocina", "living", "salon"],
+      "oficinas": ["oficina", "despacho", "estudio", "workspace"]
+    }
+  },
+  "motor_inferencia": {
+    "reglas_contextual": [
+      {
+        "condicion": "menciona_cantidad_y_tipo_mueble",
+        "accion": "calcular_precio_automatico",
+        "ejemplo": "tengo 4 sillas y un sofa grande"
+      },
+      {
+        "condicion": "menciona_medidas",
+        "accion": "calcular_metros_cuadrados",
+        "ejemplo": "mi habitacion es de 4x5 metros"
+      },
+      {
+        "condicion": "pregunta_precio_sin_especificar",
+        "accion": "solicitar_detalles_especificos",
+        "ejemplo": "cuanto cuesta limpiar"
+      },
+      {
+        "condicion": "menciona_presupuesto_limitado",
+        "accion": "ofrecer_opciones_economicas",
+        "ejemplo": "no tengo mucho presupuesto"
+      }
+    ],
+    "memoria_conversacional": {
+      "variables_sesion": [
+        "servicios_mencionados",
+        "cantidades_especificadas",
+        "presupuesto_estimado",
+        "ubicacion_cliente",
+        "urgencia_servicio"
+      ]
+    }
+  },
+  "intents": [
+    {
+      "tag": "saludo_contextual",
+      "patterns": [
+        "hola", "buenos dias", "buenas tardes", "buenas noches", "que tal", "hey", "saludos", "buenas",
+        "buen dia", "como estas", "holi", "ola", "buenas como estas", "muy buenos dias",
+        "holaaaa", "holiwis", "q tal", "ke tal", "wenas", "que onda", "como va todo",
+        "quetal", "que tal estas", "como andas", "que hay", "que pasa", "que hubo",
+        "buenas tardes como esta", "muy buenas", "buen dia como esta", "que tal todo",
+        "como le va", "como esta usted", "que tal como esta", "buenas noches como esta",
+        "hola que tal", "hola como estas", "hey que tal", "hola buenos dias",
+        "buenas tardes que tal", "hola buenas tardes", "hola buenas noches"
+      ],
+      "contexto_requerido": "inicio_conversacion",
+      "responses": [
+        "¡Hola! 👋 Soy el asistente inteligente de Decoraciones Mori. Con 8 años transformando espacios y más de 5,000 clientes satisfechos, estamos aquí para ayudarte. ¿Qué proyecto tienes en mente hoy?",
+        "¡Buen día! 🌟 Bienvenido a Decoraciones Mori. Somos especialistas en limpieza profesional, instalaciones y mantenimiento. ¿En qué podemos hacer magia en tu espacio?",
+        "¡Hola! Es un placer atenderte 😊 En Decoraciones Mori convertimos ideas en realidad. ¿Necesitas cotizar algún servicio o tienes algún proyecto específico?"
+      ],
+      "acciones_contexto": ["inicializar_sesion", "activar_modo_consultoria"]
+    },
+    {
+      "tag": "servicios_ofrecidos",
+      "patterns": [
+        "que servicios tienen", "cuales son sus servicios", "que ofrecen", "en que me pueden ayudar",
+        "lista de servicios", "servicios disponibles", "que servicios tiene", "que servicios dan",
+        "que hacen ustedes", "cuales servicios manejan", "que tipo de servicios", "servicios que brindan",
+        "que servicios proporcionan", "que pueden hacer por mi", "en que trabajan ustedes",
+        "que cosas hacen", "servicios que prestan", "que actividades realizan", "que trabajos hacen",
+        "cuales son las especialidades", "que areas manejan", "en que se especializan",
+        "que servicios ofrecen ustedes", "lista completa de servicios", "todos los servicios",
+        "servicios principales", "principales servicios", "menu de servicios", "catalogo de servicios",
+        "que pueden ofrecerme", "opciones de servicio", "alternativas de servicio"
+      ],
+      "responses": [
+        "Ofrecemos una amplia gama de servicios, incluyendo limpieza profesional de muebles y alfombras, instalación y mantenimiento de cortinas y rollers, y decoración integral de espacios. ¿Te gustaría saber más sobre alguno en particular?",
+        "Nuestros principales servicios son: limpieza especializada, instalación de cortinas y rollers, y proyectos de decoración. ¿Sobre cuál te interesa obtener más detalles?"
+      ],
+        "suggestions": ["Limpieza de muebles", "Instalación de cortinas", "Alfombras", "Decoración integral"] 
+
+    },
+    {
+      "tag": "afirmacion_confirmacion",
+      "patterns": [
+        "si", "sí", "claro", "por supuesto", "exacto", "correcto", "perfecto", "excelente",
+        "ok", "okay", "dale", "esta bien", "de acuerdo", "acepto", "confirmo", "afirmativo",
+        "efectivamente", "asi es", "tienes razon", "cierto", "verdad", "seguro", "definitivamente",
+        "obviamente", "sin duda", "totalmente", "completamente", "absolutamente", "me parece bien",
+        "esta perfecto", "va bien", "todo bien", "listo", "entendido", "comprendido",
+        "si claro", "si por supuesto", "si esta bien", "si perfecto", "si correcto",
+        "claro que si", "por supuesto que si", "esta bien si", "ok si", "dale si"
+      ],
+      "contexto_requerido": "pregunta_previa",
+      "responses": [
+        "¡Perfecto! Me alegra que estemos alineados. ¿En qué más puedo ayudarte?",
+        "¡Excelente! Continuemos entonces. ¿Qué más necesitas saber?",
+        "¡Genial! ¿Hay algo más en lo que pueda asistirte?"
+      ]
+    },
+    {
+      "tag": "negacion",
+      "patterns": [
+        "no", "no gracias", "no por ahora", "no todavia", "no aun", "no creo", "no me interesa",
+        "no es lo que busco", "no es para mi", "no me convence", "no gracias por ahora",
+        "no en este momento", "no por el momento", "tal vez mas tarde", "quizas despues",
+        "no exactamente", "no realmente", "no tanto", "no mucho", "para nada",
+        "nada", "nada por ahora", "nada mas", "no necesito nada", "no requiero nada",
+        "no me sirve", "no me funciona", "no es lo que necesito", "no es lo que quiero"
+      ],
+      "responses": [
+        "Entiendo perfectamente. Si cambias de opinión o tienes alguna consulta en el futuro, estaré aquí para ayudarte. ¿Hay algo más en lo que pueda asistirte?",
+        "No hay problema. Estoy aquí cuando necesites cualquier información sobre nuestros servicios. ¿Te gustaría saber sobre algo diferente?",
+        "Está bien, respeto tu decisión. Si más adelante tienes alguna duda o proyecto, no dudes en contactarnos. ¿Puedo ayudarte con algo más?"
+      ]
+    },
+    {
+      "tag": "consulta_inteligente_limpieza",
+      "patterns": [
+        "cuanto cuesta limpiar {cantidad} {tipo_mueble}",
+        "precio para limpiar {tipo_mueble}",
+        "necesito limpiar {cantidad} {tipo_mueble} cuanto sale",
+        "limpieza de {tipo_mueble} precio",
+        "quiero limpiar mi {tipo_mueble}",
+        "tengo {cantidad} {tipo_mueble} sucios",
+        "mis {tipo_mueble} necesitan limpieza",
+        "presupuesto limpieza {cantidad} {tipo_mueble}",
+        "cuanto cobran por limpiar", "precios de limpieza", "limpieza profesional precios",
+        "costo de limpieza", "tarifa limpieza", "cuanto sale limpiar muebles",
+        "limpieza de muebles precio", "servicio de limpieza costo", "limpiar muebles cuanto cuesta",
+        "necesito servicio de limpieza", "quiero contratar limpieza", "limpieza a domicilio precio"
+      ],
+      "entidades_extraer": ["cantidad", "tipo_mueble"],
+      "procesamiento_nlp": {
+        "extraer_numeros": true,
+        "clasificar_muebles": true,
+        "calcular_automatico": true
+      },
+      "responses": [
+        "Para {cantidad} {tipo_mueble}, el costo de limpieza es {calculo_detallado}. Esto incluye productos profesionales, desinfección y protección. ¿Te parece bien o necesitas algo más?",
+        "¡Claro! Limpiar {cantidad} {tipo_mueble} tiene un precio de {calculo_detallado}, con todos los beneficios de nuestro servicio premium. ¿Agendamos o tienes otra consulta?"
+      ],
+      "funciones_callback": ["calcular_precio_limpieza", "generar_presupuesto_detallado"]
+    },
+    {
+      "tag": "instalacion_cortinas_inteligente",
+      "patterns": [
+        "quiero instalar {cantidad} cortinas {tipo_cortina}",
+        "necesito {cantidad} {tipo_cortina} para mi {ubicacion}",
+        "cuanto sale {cantidad} cortinas {tipo_cortina} con instalacion",
+        "precio cortinas {tipo_cortina} {material} para {ubicacion}",
+        "instalar cortinas en {ubicacion} de {medidas}",
+        "cortinas {tipo_cortina} {material} cuanto cuesta",
+        "necesito cortinas que no pasen luz",
+        "quiero cortinas para oficina",
+        "cortinas precio", "instalacion de cortinas", "cortinas roller precio",
+        "cuanto cuestan las cortinas", "cortinas blackout precio", "cortinas para ventana",
+        "necesito cortinas", "quiero cortinas", "instalacion cortinas precio",
+        "cortinas con instalacion", "servicio de cortinas", "cortinas a medida precio",
+        "cuanto esta la instalación de cortinas", 
+    "cuál es el costo para instalar cortinas",
+    "me pueden dar precio para instalar cortinas",
+    "presupuesto instalacion cortinas",
+    "informacion sobre instalacion de cortinas y precios",
+    "que precio tiene el servicio de instalacion de cortinas"
+      ],
+      "entidades_extraer": ["cantidad", "tipo_cortina", "material", "ubicacion", "medidas", "funcionalidad"],
+      "procesamiento_nlp": {
+        "inferir_tipo_por_funcionalidad": true,
+        "recomendar_material": true,
+        "calcular_con_instalacion": true
+      },
+      "responses": [
+        "¡Excelente elección! Para {cantidad} cortinas {tipo_cortina} en tu {ubicacion}, te recomiendo {material_recomendado}. La inversión total sería {desglose_completo}, incluyendo instalación profesional y garantía. ¿Se ajusta a lo que buscas?",
+        "Para instalar {cantidad} cortinas {tipo_cortina} con material {material} en {ubicacion}, el costo es {desglose_completo}. Incluye asesoría y garantía. ¿Deseas proceder o ver otras opciones?"
+      ],
+      "funciones_callback": ["recomendar_cortina_por_uso", "calcular_instalacion_completa"]
+    },
+    {
+      "tag": "alfombras_modulares_contextual",
+      "patterns": [
+        "alfombra modular para {ubicacion} de {medidas}",
+        "necesito alfombrar {cantidad} {ubicacion}",
+        "cuanto cuesta alfombra {tipo_alfombra} para {medidas}",
+        "alfombra para {ubicacion} {tipo_alfombra}",
+        "quiero alfombrar mi {ubicacion} completa",
+        "necesito alfombra resistente para {uso}",
+        "alfombra que aguante mucho trafico",
+        "alfombras precio", "alfombra modular precio", "alfombrado precio",
+        "cuanto cuesta alfombra", "necesito alfombra", "quiero alfombra",
+        "alfombras para oficina", "alfombras comerciales", "alfombra residencial precio"
+      ],
+      "entidades_extraer": ["ubicacion", "medidas", "tipo_alfombra", "uso", "cantidad"],
+      "procesamiento_nlp": {
+        "calcular_metros_cuadrados": true,
+        "recomendar_tipo_por_uso": true,
+        "estimar_durabilidad": true
+      },
+      "responses": [
+        "¡Perfecto para tu {ubicacion}! He calculado que necesitas {metros_cuadrados} m² y te recomiendo la alfombra {tipo_recomendado}. La inversión completa es {calculo_detallado_alfombra}, con beneficios como {beneficios_especificos}. ¿Agendamos una visita?",
+        "Para alfombrar {cantidad} {ubicacion} con material {tipo_alfombra} (ideal para {uso}), el costo estimado es {calculo_detallado_alfombra}. ¿Quieres ver muestras?"
+      ],
+      "funciones_callback": ["calcular_area_automatica", "recomendar_alfombra_por_trafico"]
+    },
+    {
+      "tag": "cotizacion_integral_avanzada",
+      "patterns": [
+        "necesito cotizar todo mi {ubicacion}",
+        "quiero renovar completamente mi {ubicacion}",
+        "presupuesto integral para {ubicacion}",
+        "cuanto me sale arreglar todo mi {ubicacion}",
+        "necesito servicio completo",
+        "paquete completo de servicios",
+        "todo incluido para mi {ubicacion}",
+        "cotizacion completa", "presupuesto total", "servicio integral",
+        "paquete todo incluido", "servicio completo precio", "cotizar todo",
+        "presupuesto general", "cuanto sale todo", "paquete completo precio"
+      ],
+      "procesamiento_avanzado": {
+        "analizar_necesidades_integrales": true,
+        "crear_paquete_personalizado": true,
+        "aplicar_descuentos_volumen": true
+      },
+      "responses": [
+        "¡Excelente! Para un proyecto integral en tu {ubicacion}, ofrecemos una visita técnica GRATUITA para un análisis completo. Podemos crear un paquete personalizado con servicios como {servicios_recomendados} y un descuento por volumen del {descuento}%. ¿Cuándo podríamos visitarte?",
+        "Para una renovación completa de tu {ubicacion}, te proponemos una evaluación personalizada sin costo. Esto nos permitirá ofrecerte el mejor paquete integral. ¿Te interesa agendar una visita?"
+      ],
+      "funciones_callback": ["crear_paquete_integral", "calcular_descuento_volumen"]
+    },
+    {
+      "tag": "manejo_presupuesto_limitado",
+      "patterns": [
+        "no tengo mucho presupuesto",
+        "algo economico",
+        "lo mas barato",
+        "presupuesto ajustado",
+        "opciones baratas",
+        "algo accesible",
+        "precios bajos",
+        "necesito algo economico pero bueno",
+        "muy caro", "esta caro", "es mucho dinero", "no puedo pagar tanto",
+        "opciones mas baratas", "alternativas economicas", "descuentos disponibles",
+        "algo mas barato", "precio menor", "opcion economica", "presupuesto limitado",
+        "no tengo tanto dinero", "algo que no cueste tanto", "mas accesible",
+        "precio reducido", "oferta especial", "promocion", "descuento"
+      ],
+      "analisis_sentimiento": "preocupacion_economica",
+      "estrategia_respuesta": "empatia_y_opciones",
+      "responses": [
+        "¡Entiendo perfectamente! 💙 En Decoraciones Mori tenemos opciones para todos los presupuestos, como paquetes escalonados o materiales económicos de buena calidad. Cuéntame, ¿qué servicio es tu prioridad principal para encontrar la mejor solución para ti?",
+        "Comprendemos tu situación. Ofrecemos facilidades como pagos sin inicial en servicios mayores a S/500 y descuentos especiales. ¿Cuál es el servicio que más te interesa para ver cómo podemos ajustarnos?"
+      ],
+      "funciones_callback": ["generar_opciones_economicas", "calcular_planes_pago"]
+    },
+    {
+      "tag": "urgencia_temporal",
+      "patterns": [
+        "lo necesito urgente",
+        "es para mañana",
+        "cuanto antes",
+        "tengo prisa",
+        "necesito rapido",
+        "urgente por favor",
+        "tienen disponibilidad hoy",
+        "para esta semana",
+        "urgente", "ya", "rapido", "pronto", "inmediato", "hoy mismo",
+        "necesito ya", "para hoy", "cuanto antes posible", "lo antes posible",
+        "con urgencia", "de emergencia", "rapidito", "express", "super rapido",
+        "en el dia", "para ahorita", "disponibilidad inmediata", "servicio urgente"
+      ],
+      "procesamiento_urgencia": {
+        "evaluar_disponibilidad": true,
+        "priorizar_servicios": true,
+        "calcular_sobrecosto": true
+      },
+      "responses": [
+        "¡Entendido! ⚡ Para servicios urgentes, tenemos la modalidad Express. El inicio de trabajos podría ser tan pronto como {fecha_mas_proxima}, con un sobrecosto del {porcentaje_urgencia}%. ¿Qué servicio específico necesitas con urgencia para confirmar disponibilidad?",
+        "Para una situación urgente, evaluaremos la disponibilidad inmediata. Nuestro servicio Express prioriza tu necesidad. ¿Podrías indicarme el servicio que requieres?"
+      ],
+      "funciones_callback": ["verificar_disponibilidad_inmediata", "calcular_sobrecosto_urgencia"]
+    },
+    {
+      "tag": "comparacion_competencia",
+      "patterns": [
+        "en otro lado me cobran menos",
+        "la competencia es mas barata",
+        "he visto precios menores",
+        "otros ofrecen mejor precio",
+        "por que son mas caros",
+        "justifiquen sus precios",
+        "muy caro comparado con otros", "otros cobran menos", "precios altos",
+        "competencia mas barata", "precio competitivo", "igualan precios",
+        "mejor precio en otro lado", "oferta mejor", "descuento para igualar",
+        "precio de la competencia", "otros mas economicos", "comparar precios"
+      ],
+      "estrategia_diferenciacion": true,
+      "responses": [
+        "¡Excelente pregunta! En Decoraciones Mori ofrecemos un valor superior que incluye 8 años de experiencia, certificación ISO 9001, productos profesionales y garantía extendida. Además, beneficios como visita técnica gratuita y financiamiento. ¿Te gustaría conocer testimonios?",
+        "Entendemos la importancia de comparar. Nuestro precio refleja la calidad de los materiales, la experiencia de nuestros técnicos y la garantía que ofrecemos, asegurando una inversión duradera. ¿Qué aspecto del precio te gustaría que detallemos más?"
+      ],
+      "funciones_callback": ["mostrar_diferenciadores", "generar_propuesta_valor"]
+    },
+    {
+      "tag": "manejo_objeciones_precio",
+      "patterns": [
+        "esta muy caro",
+        "no puedo pagar tanto",
+        "el precio esta elevado",
+        "supera mi presupuesto",
+        "es mucho dinero",
+        "precios altos",
+        "caro", "costoso", "elevado", "alto precio", "sobrepasa presupuesto",
+        "fuera de mi alcance", "no me alcanza", "excede mi presupuesto",
+        "precio excesivo", "demasiado costoso", "precio prohibitivo",
+        "no esta en mis posibilidades", "muy por encima de mi presupuesto"
+      ],
+      "tecnica_venta": "reestructuracion_valor",
+      "responses": [
+        "Comprendo tu perspectiva. Podemos analizar alternativas como el pago en cuotas sin interés, ajustar el alcance del servicio o revisar si calificas para algún descuento por pronto pago. ¿Cuál de estas opciones te interesaría explorar?",
+        "Entiendo. A veces el precio inicial puede parecer alto, pero considera el ahorro a largo plazo por la durabilidad y calidad. También podemos ver opciones de servicio por etapas. ¿Qué te parece?"
+      ],
+      "funciones_callback": ["calcular_costo_beneficio", "generar_alternativas_pago"]
+    },
+    {
+      "tag": "recomendaciones_inteligentes",
+      "patterns": [
+        "que me recomiendan",
+        "cual es mejor opcion",
+        "no se que elegir",
+        "ayudenme a decidir",
+        "que seria lo ideal",
+        "consejos profesionales",
+        "que sugieren", "que aconsejan", "que recomendacion dan", "que opinion tienen",
+        "que les parece mejor", "cual eligirian ustedes", "que opcion es mejor",
+        "su recomendacion", "consejo profesional", "sugerencia", "orientacion",
+        "que me conviene mas", "cual me recomiendan", "que es lo mejor para mi caso"
+      ],
+      "motor_recomendacion": {
+        "analizar_contexto_completo": true,
+        "evaluar_factores_multiples": true,
+        "personalizar_sugerencias": true
+      },
+      "responses": [
+        "¡Perfecto! Para darte la mejor recomendación, necesitaría saber un poco más sobre tu proyecto o necesidades. ¿Podrías contarme qué tienes en mente o qué problema buscas resolver?",
+        "Claro que sí. Como expertos, podemos ayudarte. Cuéntame más sobre lo que buscas, tu espacio y tus preferencias para darte una sugerencia personalizada."
+      ],
+      "funciones_callback": ["generar_recomendacion_ia", "crear_propuesta_personalizada"]
+    },
+    {
+      "tag": "seguimiento_conversacion",
+      "patterns": [
+        "y que mas",
+        "continua",
+        "sigueme contando",
+        "que otros servicios",
+        "algo mas",
+        "que mas ofrecen",
+        "y que otra cosa", "continuen", "sigan", "que mas tienen", "adicional",
+        "otras opciones", "mas alternativas", "que otras cosas", "seguimos",
+        "continuamos", "que sigue", "que mas hay", "otras posibilidades"
+      ],
+      "contexto_requerido": "conversacion_activa",
+      "procesamiento_memoria": {
+        "recordar_servicios_mencionados": true,
+        "evitar_repeticion": true,
+        "profundizar_interes": true
+      },
+      "responses": [
+        "¡Claro! Además de lo que hemos hablado, también ofrecemos {servicio_complementario_1} y {servicio_complementario_2}. Si combinas servicios, podrías acceder a un descuento especial. ¿Alguno te interesa?",
+        "Continuando, si ya hablamos de {servicios_discutidos}, quizás te interese nuestro servicio de {servicio_complementario_sugerido}, que muchos clientes solicitan en conjunto. ¿Quieres más detalles?"
+      ],
+      "funciones_callback": ["analizar_servicios_discutidos", "sugerir_complementarios"]
+    },
+    {
+      "tag": "manejo_errores_inteligente",
+      "patterns": [
+        "no entiendo",
+        "explica mejor",
+        "no me queda claro",
+        "puedes repetir",
+        "no comprendo",
+        "no entendi", "explicate mejor", "no esta claro", "confuso",
+        "no se entiende", "dificil de entender", "complicado", "enredado",
+        "no capto", "no me llega", "otra vez por favor", "repite",
+        "mas claro", "mas simple", "de forma sencilla"
+      ],
+      "estrategia_clarificacion": "reformulacion_adaptativa",
+      "responses": [
+        "¡Por supuesto! 😊 Permíteme intentar explicarlo de otra manera: {explicacion_simplificada}. ¿Así queda más claro o hay algún punto específico que necesite mayor detalle?",
+        "Claro, a veces puedo ser un poco técnico. Lo que quise decir es {reformulacion_sencilla}. ¿Mejor así? Pregunta con confianza."
+      ],
+      "funciones_callback": ["simplificar_explicacion", "adaptar_lenguaje"]
+    },
+    {
+      "tag": "cierre_venta_inteligente",
+      "patterns": [
+        "me interesa",
+        "quiero proceder",
+        "como sigue el proceso",
+        "cuando empezamos",
+        "acepto la propuesta",
+        "me convence",
+        "vamos adelante", "sigamos", "procedamos", "empecemos",
+        "quiero contratar", "donde firmo", "como pago", "confirmado",
+        "hagamoslo", "estoy de acuerdo", "listo para empezar", "contratar servicio",
+        "iniciar proyecto", "quiero el servicio", "me parece bien"
+      ],
+      "procesamiento_cierre": {
+        "confirmar_detalles": true,
+        "programar_siguiente_paso": true,
+        "generar_contrato": true
+      },
+      "responses": [
+        "¡Excelente decisión! 🎉 Para formalizar, solo necesito confirmar tu dirección, teléfono y el horario que prefieres para la visita técnica el día {fecha_visita}. ¿Tienes estos datos a la mano?",
+        "¡Magnífico! Estamos listos para empezar. El siguiente paso es agendar la visita técnica para el {fecha_visita}. Luego, iniciaremos los trabajos el {fecha_inicio}. ¿Confirmamos estos detalles?"
+      ],
+      "funciones_callback": ["generar_resumen_proyecto", "programar_visita_tecnica"]
+    },
+    {
+      "tag": "despedida_inteligente",
+      "patterns": [
+        "adios", "hasta luego", "nos vemos", "chao", "me voy",
+        "hasta la proxima", "bye", "hasta pronto", "gracias por todo",
+        "eso es todo", "eso seria todo", "muchas gracias adios", "ok gracias",
+        "ya no necesito mas", "terminamos", "finalizar", "gracias bye",
+        "saludos adios", "nos vemos pronto", "que tengas buen dia adios"
+      ],
+      "procesamiento_despedida": {
+        "evaluar_interes_mostrado": true,
+        "programar_seguimiento": true,
+        "guardar_contexto": true
+      },
+      "responses": [
+        "¡Ha sido un placer ayudarte! 😊 Guardaré nuestra conversación por si decides continuar más adelante. Recuerda que en Decoraciones Mori estamos para transformar tu espacio. ¡Hasta pronto! 👋",
+        "Gracias por tu tiempo. Si tienes más consultas o decides proceder, no dudes en contactarnos. ¡Que tengas un excelente día! 🌟"
+      ],
+      "funciones_callback": ["evaluar_probabilidad_conversion", "programar_seguimiento_automatico"]
+    },
+    {
+      "tag": "desconocido",
+      "patterns": [],
+      "responses": [
+        "Lo siento, no estoy seguro de cómo ayudarte con eso. ¿Podrías intentar preguntarme de otra manera sobre nuestros servicios de decoración, limpieza o instalación?",
+        "Mmm, no he entendido bien tu consulta. ¿Puedes reformularla? Quizás preguntando sobre limpieza de muebles, cortinas o alfombras.",
+        "No tengo información sobre lo que me pides en este momento. Puedo ayudarte con cotizaciones, información de servicios o agendar visitas."
+      ]
+    }
+  ],
+  "sistema_calculo_automatico": {
+    "funciones_precio": {
+      "calcular_limpieza": {
+        "inputs": ["tipo_mueble", "cantidad"],
+        "formula": "precio_unitario * cantidad",
+        "precios_base": {
+          "silla": 20,
+          "mueble_mediano": 40,
+          "mueble_grande": 60
+        }
+      },
+      "calcular_cortinas": {
+        "inputs": ["tipo_cortina", "material", "cantidad"],
+        "formula": "(precio_material + precio_instalacion) * cantidad",
+        "matriz_precios": {
+          "roller_basico": {"material": 45, "instalacion": 25},
+          "roller_blackout": {"material": 65, "instalacion": 25},
+          "roller_screen": {"material": 75, "instalacion": 25},
+          "roller_premium": {"material": 95, "instalacion": 25},
+          "panel_basico": {"material": 35, "instalacion": 30},
+          "panel_decorativo": {"material": 55, "instalacion": 30},
+          "panel_premium": {"material": 85, "instalacion": 30}
+        }
+      },
+      "calcular_alfombras": {
+        "inputs": ["tipo_alfombra", "metros_cuadrados"],
+        "formula": "300 + (precio_por_m2 * metros_cuadrados)",
+        "precios_material": {
+          "comercial": 85,
+          "residencial": 120,
+          "premium": 180
+        }
+      }
+    },
+    "descuentos_automaticos": {
+      "volumen": {
+        "servicios_multiples": 0.10,
+        "cantidad_alta": 0.15,
+        "proyecto_integral": 0.20
+      },
+      "temporales": {
+        "pronto_pago": 0.05,
+        "referido": 0.08,
+        "cliente_frecuente": 0.12
+      }
+    }
+  },
+  "procesamiento_lenguaje_natural": {
+    "normalizacion_texto": {
+      "correccion_ortografica": true,
+      "expansion_abreviaciones": {
+        "q": "que",
+        "x": "por",
+        "xq": "porque",
+        "m2": "metro cuadrado"
+      },
+      "sinonimos": {
+        "caro": ["costoso", "elevado", "alto"],
+        "barato": ["economico", "accesible", "bajo"],
+        "rapido": ["urgente", "pronto", "ya"]
+      }
+    },
+    "extraccion_entidades": {
+      "numeros": {
+        "regex": "\\b\\d+\\b|uno|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez",
+        "conversion": {"uno": 1, "dos": 2, "tres": 3, "cuatro": 4, "cinco": 5}
+      },
+      "medidas": {
+        "patrones": ["\\d+x\\d+", "\\d+ por \\d+", "\\d+ metros cuadrados"]
+      },
+      "ubicaciones": {
+        "habitacion": ["habitacion", "dormitorio", "cuarto", "recamara"],
+        "sala": ["sala", "living", "salon", "estancia"],
+        "oficina": ["oficina", "despacho", "estudio", "workspace"]
+      }
+    },
+    "analisis_sentimiento": {
+      "positivo": ["excelente", "perfecto", "genial", "buenisimo"],
+      "negativo": ["caro", "malo", "terrible", "pesimo"],
+      "neutral": ["ok", "normal", "regular", "asi"]
+    },
+    "contexto_conversacional": {
+      "memoria_corto_plazo": ["ultimo_servicio_mencionado", "ultima_cantidad", "ultimo_precio"],
+      "memoria_largo_plazo": ["servicios_interes", "presupuesto_estimado", "urgencia_detectada"],
+      "persistencia_sesion": true
+    }
+  },
+  "respuestas_dinamicas": {
+    "templates": {
+      "calculo_personalizado": "Para {cantidad} {tipo_item}, el costo sería: S/ {precio_total}\\n\\nDesglose:\\n{desglose_detallado}",
+      "recomendacion_contextual": "Basándome en que mencionaste {contexto_previo}, te recomiendo {sugerencia_personalizada}",
+      "oferta_dinamica": "Por ser {tipo_cliente}, tienes un descuento especial del {porcentaje_descuento}%"
+    },
+    "personalizacion": {
+      "nuevo_cliente": "Como es tu primera consulta con nosotros...",
+      "cliente_interesado": "Veo que tienes interés real en nuestros servicios...",
+      "cliente_presupuesto_ajustado": "Entendiendo tu situación económica..."
+    }
+  },
+  "integraciones_avanzadas": {
+    "calendario_disponibilidad": {
+      "api_simulada": true,
+      "horarios_disponibles": ["09:00-12:00", "14:00-17:00"],
+      "dias_laborables": ["lunes", "martes", "miercoles", "jueves", "viernes", "sabado"]
+    },
+    "generador_cotizaciones": {
+      "formato": "PDF",
+      "incluye": ["logo_empresa", "desglose_detallado", "terminos_condiciones", "vigencia_propuesta"]
+    },
+    "sistema_seguimiento": {
+      "recordatorios_automaticos": [1, 7, 30],
+      "tipos_followup": ["consulta_adicional", "promocion_relacionada", "feedback_servicio"]
+    }
+  },
+  "metricas_conversacion": {
+    "tracking": {
+      "intenciones_detectadas": true,
+      "entidades_extraidas": true,
+      "nivel_satisfaccion": true,
+      "probabilidad_conversion": true
+    },
+    "optimizacion": {
+      "ajuste_respuestas": true,
+      "mejora_continua": true,
+      "aprendizaje_patrones": true
+    }
+  }
+}
